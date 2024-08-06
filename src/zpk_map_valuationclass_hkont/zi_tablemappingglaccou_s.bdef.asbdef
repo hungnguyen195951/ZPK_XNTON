@@ -1,0 +1,69 @@
+managed with additional save implementation in class ZBP_I_TABLEMAPPINGGLACCOU_S unique;
+strict;
+with draft;
+define behavior for ZI_TableMappingGlaccou_S alias TableMappingGlacAll
+draft table ZTB_MAP_HKO_D_S
+with unmanaged save
+lock master total etag LastChangedAtMax
+authorization master( global )
+
+{
+  field ( readonly )
+   SingletonID;
+
+  field ( notrigger )
+   SingletonID,
+   HideTransport,
+   LastChangedAtMax;
+
+
+  update;
+  internal create;
+  internal delete;
+
+  draft action ( features : instance ) Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+  action ( features : instance ) SelectCustomizingTransptReq parameter D_SelectCustomizingTransptReqP result [1] $self;
+
+  association _TableMappingGlaccou { create ( features : instance ); with draft; }
+}
+
+define behavior for ZI_TableMappingGlaccou alias TableMappingGlaccou
+persistent table ZTB_MAP_HKONT
+draft table ZTB_MAP_HKONT_D
+lock dependent by _TableMappingGlacAll
+authorization dependent by _TableMappingGlacAll
+
+{
+  field ( mandatory : create )
+   Valuationarea,
+   Valuationclass;
+
+  field ( readonly )
+   SingletonID;
+
+  field ( readonly : update )
+   Valuationarea,
+   Valuationclass;
+
+  field ( notrigger )
+   SingletonID;
+
+
+  update( features : global );
+  delete( features : global );
+
+  mapping for ZTB_MAP_HKONT
+  {
+    Valuationarea = VALUATIONAREA;
+    Valuationclass = VALUATIONCLASS;
+    Glaccount = GLACCOUNT;
+  }
+
+  association _TableMappingGlacAll { with draft; }
+
+  validation ValidateTransportRequest on save ##NOT_ASSIGNED_TO_DETACT { create; update; delete; }
+}

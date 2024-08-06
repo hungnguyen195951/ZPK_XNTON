@@ -1,0 +1,45 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'TableMappingGlaccou', 
+    typeNamePlural: 'TableMappingGlaccous', 
+    title: {
+      type: #STANDARD, 
+      label: 'Table mapping glaccount-valuation class', 
+      value: 'Valuationarea'
+    }
+  }
+}
+annotate view ZI_TableMappingGlaccou with
+{
+  @UI.identification: [ {
+    position: 1 
+  } ]
+  @UI.lineItem: [ {
+    position: 1 
+  } ]
+  @UI.facet: [ {
+    id: 'ZI_TableMappingGlaccou', 
+    purpose: #STANDARD, 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'Table mapping glaccount-valuation class', 
+    position: 1 
+  } ]
+  Valuationarea;
+  
+  @UI.identification: [ {
+    position: 2 
+  } ]
+  @UI.lineItem: [ {
+    position: 2 
+  } ]
+  Valuationclass;
+  
+  @UI.identification: [ {
+    position: 3 
+  } ]
+  @UI.lineItem: [ {
+    position: 3 
+  } ]
+  Glaccount;
+}

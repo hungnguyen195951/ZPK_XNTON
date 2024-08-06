@@ -1,0 +1,4 @@
+@EndUserText.label: 'Nhập xuất tồn số lượng giá trị'
+define service ZWM_NXT_SLGT {
+  expose ZWM_I_NXT_SLGT_CH1;
+}
